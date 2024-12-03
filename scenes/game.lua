@@ -67,6 +67,8 @@ function scene:create( event )
 		end
 	end)
 
+	ui.createTextBox(sceneGroup)
+
 	-- Ladataan pelin ensimmäinen node.
 	nodeHandling.setSceneGroup(sceneGroup)
 	nodeHandling:getNode( "Exterior" )

@@ -8,6 +8,10 @@ local background = nil
 local characters = {}
 local textList = {}
 
+local textBox
+
+local fontFilename ="assets/fonts/Roboto/Roboto-Regular.ttf"
+
 -- Luodaan uusi audio-nappi.
 function ui.newAudioButton()
 	-- Estetään, ettei funktiota voi ajaa kuin kerran.
@@ -131,6 +135,47 @@ function ui.createSensor(sceneGroup, onTouch)
 end
 
 
+function ui.createTextBox(sceneGroup)
+	local width = screen.width/2
+	local height = 300
+
+	textBox = display.newGroup()
+	textBox.x = screen.centerX
+	textBox.y = screen.maxY - height/2
+
+	local box = display.newRect( textBox, 0, 0, width, height )
+	box:setFillColor(0.5)
+
+	sceneGroup:insert(textBox)
+end
+
+function ui.createNewButton(sceneGroup, text, x, y)
+	local buttonGroup = display.newGroup()
+	sceneGroup:insert(buttonGroup)
+	buttonGroup.x = x
+	buttonGroup.y = y
+
+	local width = 200
+	local height = 100
+	local image = display.newRect( buttonGroup, 0, 0, width, height )
+
+	local textObj = display.newText({
+		parent = textBox,
+		text = text,
+		x = 0,
+		y = 0,
+		width = width,
+		font = fontFilename,
+		fontSize = 48,
+		align = "center"
+	})
+	textObj:setFillColor(0)
+
+	buttonGroup:insert(image)
+	buttonGroup:insert(textObj)
+end
+
+
 -- Hahmo funktiot
 
 
@@ -212,18 +257,36 @@ function ui.deleteTextsAndLinks()
 	end
 end
 
-function ui.createTextOrLink(command, sceneGroup, node, x, y, touchLink)
+function ui.createTextOrLink(sceneGroup, command, node, touchLink)
+	-- Luodaan ensimmäinen teksti aina samaan paikkaan, mutta
+	-- lisätään muut tekstit relatiivisesti edeltävään tekstiin.
+	--local x, y = screen.centerX, screen.centerY + 190
+	local y = 0
+	-- Poistetaan vanhat tekstit tai linkit vain jos
+	-- olemme luomassa uutta tekstiä. Jos luommekin
+	-- uutta linkkiä, niin jätetään tekstit sikseen.
+	if command == "text" then
+		ui.deleteTextsAndLinks()
+	else
+		-- Luomme linkkiä ja sitä ennen on luotu
+		-- ainakin yksi teksti-objektit.
+		if #textList > 0 then
+			y = textList[#textList].y + textList[#textList].height + 16
+		end
+
+	end
+
 	textList[#textList+1] = display.newText({
-		parent = sceneGroup,
+		parent = textBox,
 		text = node[2],
-		x = x,
+		x = 0,
 		y = y,
 		width = screen.width - 60,
-		font = "assets/fonts/Roboto/Roboto-Regular.ttf",
-		fontSize = 24,
+		font = fontFilename,
+		fontSize = 48,
 		align = "center"
 	})
-	textList[#textList].anchorY = 0
+	--textList[#textList].anchorY = 0
 
 	if command == "link" then
 		-- Lisätään linkkeihin eri väri, jotta ne erottuvat
@@ -233,16 +296,9 @@ function ui.createTextOrLink(command, sceneGroup, node, x, y, touchLink)
 		-- Tehdään linkeistä kosketettavia ja lisätään niihin id.
 		textList[#textList]:addEventListener( "touch", touchLink )
 		textList[#textList].id = node[3]
+
+		--ui.createNewButton(sceneGroup, node[2], screen.centerX, screen.centerY)
 	end
 end
-
-function ui.getTextAmount()
-	return #textList
-end
-
-function ui.getLastText()
-	return textList[#textList]
-end
-
 
 return ui

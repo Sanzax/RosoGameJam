@@ -1,7 +1,7 @@
 local nodeHandling = {}
 
 -- Dependencies
-local screen = require( "scripts.screen" )
+--local screen = require( "scripts.screen" )
 local weaver = require( "scripts.spyricStoryWeaver" )
 local ui = require( "scripts.ui" )
 
@@ -54,25 +54,7 @@ local function commandCharacter(i)
 end
 
 local function commandTextOrLink(command, i)
-	-- Luodaan ensimmäinen teksti aina samaan paikkaan, mutta
-	-- lisätään muut tekstit relatiivisesti edeltävään tekstiin.
-	local x, y = screen.centerX, screen.centerY + 190
-
-	-- Poistetaan vanhat tekstit tai linkit vain jos
-	-- olemme luomassa uutta tekstiä. Jos luommekin
-	-- uutta linkkiä, niin jätetään tekstit sikseen.
-	if command == "text" then
-		ui.deleteTextsAndLinks()
-	else
-		-- Luomme linkkiä ja sitä ennen on luotu
-		-- ainakin yksi teksti-objektit.
-		if ui.getTextAmount() > 0 then
-			y = ui.getLastText().y + ui.getLastText().height + 16
-		end
-
-	end
-
-	ui.createTextOrLink(command, sceneGroup, node[i], x, y, touchLink)
+	ui.createTextOrLink(sceneGroup, command, node[i], touchLink)
 
 	-- Jos taulukko jatkuu ja seuraava luotava asia
 	-- ei ole linkki, niin katkaistaan loop.

@@ -3,7 +3,7 @@ display.setStatusBar( display.HiddenStatusBar )
 -- Luomme yhden globaalin muuttujan, niin sen löytää aina
 -- kaikkialta. Tämän niminen muuttuja ei myöskään vahingossa
 -- sekoitu muihin muuttujiin.
-_G.developerMode = false
+_G.developerMode = true
 
 -- Composer on sisäänrakennettu Solar2D:hen, eli sen voi
 -- voi kutsua ilman tarkempaa tiedostopolun määrittämistä
