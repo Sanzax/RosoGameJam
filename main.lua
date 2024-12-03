@@ -19,3 +19,5 @@ composer.gotoScene( "scenes.menu", {
 	time = 500,
 	effect = "fade",
 } )
+ -- Testi 1234
+ 
