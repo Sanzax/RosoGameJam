@@ -1,0 +1,42 @@
+[
+	{
+		"title": "Exterior",
+		"tags": "",
+		"body": "<<img, assets/images/levels/office_exterior.png>>\n\n# Pelaaja käynnistää tarinan ensimmäistä kertaa.\n<<if $visits == 0>>\n\tAnother day, another crime.\n\n\tI guess the city never sleeps.\n    \n# Pelaaja palaa tähän nodeen uudestaan.\n<<else>>\n\t<<if $hasAssignment == true>>\n    \tAlright, it's time to get to work!\n    \n    \t# Estetään ettei pelaaja voi enää palata toimistoon.\n    \t<<link break \"Office\">>\n        \n        [[Go on assignment|Assignment]]\n        \n    <<else>>\n\t\tAh... fresh air...\n    \n    \t...I completely forgot what I came here.\n        \n\t<<end>>\n    \n<<end>>\n\n# Pelaaja voi mennä (takaisin) toimistoon.\n[[Go inside|Office]]",
+		"position": {
+			"x": "800",
+			"y": "400"
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Office",
+		"tags": "",
+		"body": "<<img, assets/images/levels/office_day.png>>\n\n\n<<if $hasAssignment == true>>\n\t# Näytetään ja piilotetaan hahmoja.\n\t<<character, show, secretary, x = 700>>\n\n\tDid you finally pick up your new assignment?\n    \n    <<character, show, detective, x = 260, xScale=-1>>\n    \n    Yeah, I did.\n    \n    I'll be off now...\n\n\t[[Time to head out|Exterior]]\n<<else>>\n\n\t<<if $visits == 0>>\n        # Näytetään ja piilotetaan hahmoja.\n        <<character, show, secretary, x = 700>>\n\n        You're late!\n\n        <<character, show, detective, x = 260, xScale=-1>>\n        <<character, hide, secretary>>\n\n        It's too early in the morning for you to be shouting at me...\n\n        <<character, show, secretary, x = 700>>\n\n        Maybe I wouldn't have to shout if you didn't show up late every day.\n\n        I'm counting on this job for my livelihood, you know.\n\n        <<character, hide, secretary>>\n\n        Yeah... sorry about that. I'll get right to it.\n\n        [[Check your desk for a new assignment|Desk]]\n        [[I forgot something outside|Exterior]]\n\n    <<else>>\n        <<character, show, secretary, x = 700>>\n\n        Stop wasting time and get to work!\n\n        <<character, show, detective, x = 260, xScale=-1>>\n        <<character, hide, secretary>>\n\n        Yeah... yeah... I'm on it.\n\n        [[Check your desk for a new assignment|Desk]]\n        [[I forgot something outside|Exterior]]\n  \t<<end>>\n    \n<<end>>\n",
+		"position": {
+			"x": "800",
+			"y": "600"
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Assignment",
+		"tags": "",
+		"body": "# Poistetaan taustakuva.\n<<del background>>\n\nThank you for playing Roso Noir.",
+		"position": {
+			"x": "1000",
+			"y": "400"
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Desk",
+		"tags": "",
+		"body": "# Annetaan pelaajalle \"tämän tehtävä\".\n<<set $hasAssignment = true>>\n\nAlright, here's the assignment.\n\nI guess I'll read it on the way there...\n\n[[Pick up the assignment|Office]]",
+		"position": {
+			"x": "1000",
+			"y": "600"
+		},
+		"colorID": 0
+	}
+]
