@@ -6,11 +6,22 @@ local audioButtonCreated = false
 
 local background = nil
 local characters = {}
-local textList = {}
 
 local textBox
 
 local fontFilename ="assets/fonts/Roboto/Roboto-Regular.ttf"
+
+local choices = {}
+local choiceGroup
+
+local choiceButtonWidth = 300
+local choiceButtonHeight = 150
+local choiceButtonPacing = 25
+
+
+function ui.textBoxToFront()
+	textBox:toFront()
+end
 
 -- Luodaan uusi audio-nappi.
 function ui.newAudioButton()
@@ -149,14 +160,12 @@ function ui.createTextBox(sceneGroup)
 	sceneGroup:insert(textBox)
 end
 
-function ui.createNewButton(sceneGroup, text, x, y)
+function ui.createNewButton(sceneGroup, text, x, y, width, height, touchFunc)
 	local buttonGroup = display.newGroup()
 	sceneGroup:insert(buttonGroup)
 	buttonGroup.x = x
 	buttonGroup.y = y
 
-	local width = 200
-	local height = 100
 	local image = display.newRect( buttonGroup, 0, 0, width, height )
 
 	local textObj = display.newText({
@@ -173,6 +182,41 @@ function ui.createNewButton(sceneGroup, text, x, y)
 
 	buttonGroup:insert(image)
 	buttonGroup:insert(textObj)
+
+	buttonGroup:addEventListener("touch", touchFunc)
+
+	return buttonGroup
+end
+
+function ui.createNewChoiceButton(sceneGroup, node, x, y, touchLink)
+	local button = ui.createNewButton(sceneGroup, node[2], x, y, choiceButtonWidth, choiceButtonHeight, touchLink)
+	button.id = node[3]
+
+	choices[#choices+1] = button
+end
+
+function ui.deleteChoices()
+	display.remove( choiceGroup )
+	choiceGroup = nil
+	for i, _ in ipairs( choices ) do
+		display.remove( choices[i] )
+		choices[i] = nil
+	end
+end
+
+function ui.organizeChoices(sceneGroup)
+	choiceGroup = display.newGroup()
+	for i, v in ipairs( choices ) do
+		choiceGroup:insert(v)
+
+		v.x = (i-1) * (choiceButtonWidth + choiceButtonPacing) - ((#choices-1) * (choiceButtonWidth + choiceButtonPacing)) / 2
+		v.y = 0
+	end
+
+	choiceGroup.x = screen.centerX
+	choiceGroup.y = screen.centerY + 500
+
+	sceneGroup:insert(choiceGroup)
 end
 
 
@@ -188,7 +232,7 @@ function ui.deleteCharacters()
 	-- Alaviiva, _, kertoo, ettemme käytä pairs
 	-- loopissaavain-arvo-parin arvoa mihinkään.
 	for name, _ in pairs( characters ) do
-	ui.deleteCharacter(name)
+		ui.deleteCharacter(name)
 	end
 end
 
@@ -239,7 +283,9 @@ end
 
 
 function ui.newBackGround(sceneGroup, file)
-	background = display.newImage( sceneGroup, file, screen.centerX, screen.centerY - 60 )
+	background = display.newImage( sceneGroup, file, screen.centerX, screen.centerY)
+	background.width = screen.width
+	background.height = screen.height
 end
 
 function ui.deleteBackground()
@@ -250,55 +296,24 @@ end
 -- Teksti funktiot
 
 
-function ui.deleteTextsAndLinks()
-	for j = 1, #textList do
-		display.remove( textList[j] )
-		textList[j] = nil
-	end
+function ui.deleteText()
+	display.remove( textBox.text )
 end
 
-function ui.createTextOrLink(sceneGroup, command, node, touchLink)
-	-- Luodaan ensimmäinen teksti aina samaan paikkaan, mutta
-	-- lisätään muut tekstit relatiivisesti edeltävään tekstiin.
-	--local x, y = screen.centerX, screen.centerY + 190
-	local y = 0
-	-- Poistetaan vanhat tekstit tai linkit vain jos
-	-- olemme luomassa uutta tekstiä. Jos luommekin
-	-- uutta linkkiä, niin jätetään tekstit sikseen.
-	if command == "text" then
-		ui.deleteTextsAndLinks()
-	else
-		-- Luomme linkkiä ja sitä ennen on luotu
-		-- ainakin yksi teksti-objektit.
-		if #textList > 0 then
-			y = textList[#textList].y + textList[#textList].height + 16
-		end
+function ui.createText(text)
+	ui.deleteText()
 
-	end
-
-	textList[#textList+1] = display.newText({
+	textBox.text = display.newText({
 		parent = textBox,
-		text = node[2],
+		text = text,
 		x = 0,
-		y = y,
+		y = 0,
 		width = screen.width - 60,
 		font = fontFilename,
 		fontSize = 48,
 		align = "center"
 	})
-	--textList[#textList].anchorY = 0
-
-	if command == "link" then
-		-- Lisätään linkkeihin eri väri, jotta ne erottuvat
-		-- tavallisesta tekstistä.
-		textList[#textList]:setFillColor( 230/255, 170/255, 25/255 )
-
-		-- Tehdään linkeistä kosketettavia ja lisätään niihin id.
-		textList[#textList]:addEventListener( "touch", touchLink )
-		textList[#textList].id = node[3]
-
-		--ui.createNewButton(sceneGroup, node[2], screen.centerX, screen.centerY)
-	end
+	--textBox.text.anchorY = 0
 end
 
 return ui

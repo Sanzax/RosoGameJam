@@ -13,6 +13,8 @@ nodeHandling.canPress = false
 
 local sceneGroup
 
+nodeHandling.nextNodeId = nil
+
 function nodeHandling.setSceneGroup(newSceneGroup)
 	sceneGroup = newSceneGroup
 end
@@ -35,6 +37,7 @@ local function commandImageOrDel(command, i)
 	if command == "img" then
 		-- Luodaan uusi taustakuva.
 		ui.newBackGround( sceneGroup, node[i][2])
+		ui.textBoxToFront()
 	end
 end
 
@@ -53,18 +56,33 @@ local function commandCharacter(i)
 
 end
 
-local function commandTextOrLink(command, i)
-	ui.createTextOrLink(sceneGroup, command, node[i], touchLink)
-
-	-- Jos taulukko jatkuu ja seuraava luotava asia
-	-- ei ole linkki, niin katkaistaan loop.
-	if node[i+1] and node[i+1][1] ~= "link" then
+local function commandText(i)
+	ui.createText(node[i][2])
+	if not (node[i+1][1] == "link") then
+		-- Lopetetaan looppi
 		return true
 	end
-
 	return false
 end
 
+local function commandLink(i)
+	-- Ei luoda nappia linkille
+	if node[i][2] == "noButton" then
+		print(node[i][3])
+		nodeHandling.nextNodeId = node[i][3]
+		return true
+	else
+		ui.createNewChoiceButton(sceneGroup, node[i], 0, 0, touchLink)
+
+		-- Viimeinen linkki joten lopetetaan looppi
+		if #node < i + 1 or not node[i+1][1] == "link" then
+			nodeHandling.canPress = true
+			ui.organizeChoices(sceneGroup)
+			return true
+		end
+	end
+	return false
+end
 
 function nodeHandling:getContent()
 	-- Varmistetaan, että indeksi on olemassa, ettei peli kaadu.
@@ -87,8 +105,12 @@ function nodeHandling:getContent()
 			commandImageOrDel(command, i)
 		elseif command == "character" then
 			commandCharacter(i)
-		elseif command == "text" or command == "link" then
-			if commandTextOrLink(command, i) then
+		elseif command == "text" then
+			if commandText(i) then
+				break
+			end
+		elseif command == "link" then
+			if commandLink(i) then
 				break
 			end
 		end
@@ -97,11 +119,10 @@ end
 
 -- Ladataan uusi node ja nollataan nodeIndex laskuri.
 function nodeHandling:getNode( nodeName )
-	-- Poistetaan kaikki tekstit ja hahmot kun
-	-- node vaihtuu.
-	ui.deleteTextsAndLinks()
-
+	-- Poistetaan kaikki tekstit, hahmot ja valinta napit kun node vaihtuu.
+	ui.deleteText()
 	ui.deleteCharacters()
+	ui.deleteChoices()
 
 	node = weaver.getNode( nodeName, _G.story )
 	nodeIndex = 1

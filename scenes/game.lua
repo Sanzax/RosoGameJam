@@ -19,21 +19,6 @@ local scene = composer.newScene()
 
 local sfxClick = audio.loadSound( "assets/sfx/click.wav" )
 
--- Tulostetaan taulukon ylimmät avaimet ja niiden arvot,
--- eli (k)ey ja (v)alue pairs looppaus.
--- local function outputTable( t )
--- 	-- Lisätään tyhjä rivi eri taulukoiden väliin.
--- 	print( "" )
--- 	for k, v in pairs( t ) do
--- 		print( k, v )
--- 		if type( v ) == "table" then
--- 			for i = 1, #v do
--- 				print( "\t", v[i] )
--- 			end
--- 		end
--- 	end
--- end
-
 
 --------------------------------------------------------------------------------------
 -- Scene event funktiot:
@@ -63,15 +48,20 @@ function scene:create( event )
 	ui.createSensor(sceneGroup, function(event)
 		if event.phase == "began" and nodeHandling.canPress then
 			audio.play( sfxClick )
-			nodeHandling:getContent()
+			if nodeHandling.nextNodeId == nil then
+				nodeHandling:getContent()
+			else
+				nodeHandling:getNode( nodeHandling.nextNodeId)
+				nodeHandling.nextNodeId = nil
+			end
 		end
 	end)
 
 	ui.createTextBox(sceneGroup)
 
-	-- Ladataan pelin ensimmäinen node.
 	nodeHandling.setSceneGroup(sceneGroup)
-	nodeHandling:getNode( "Exterior" )
+	-- Ladataan pelin ensimmäinen node.
+	nodeHandling:getNode( "Metsa alku" )
 
 	-- Luodaan nappi, millä pelaaja voi palata menu sceneen.
 	local buttonBack = ui.newTitle({

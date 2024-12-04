@@ -17,6 +17,10 @@ local scene = composer.newScene()
 
 local canPress = false
 
+local backgroundFile = "assets/images/levels/forest01.png"
+
+
+
 local function menuEvent( event )
 	if event.phase == "began" and canPress then
 		local id = event.target.id
@@ -57,23 +61,15 @@ function scene:create( event )
 
 	-- outputTable( event )
 
-	local paint = {
-		type = "gradient",
-		color1 = { 218/255, 210/255, 189/255 },
-		color2 = { 64/255, 47/255, 39/255 },
-		direction = "down"
-	}
-
-	local background = display.newRect( sceneGroup, screen.centerX, screen.centerY, screen.width, screen.height )
-	background.fill = paint
-
-	local logo = display.newImage( sceneGroup, "assets/images/other/Icon_256_transparent.png", screen.centerX, screen.centerY - 60 )
+	local background = display.newImage( sceneGroup, backgroundFile, screen.centerX, screen.centerY)
+	background.width = screen.width
+	background.height = screen.height
 
 	local title = ui.newTitle({
 		parent = sceneGroup,
-		text = "Roso Noir",
+		text = "Metsä peli",
 		x = screen.centerX,
-		y = logo.y - logo.height*0.5 - 50,
+		y = screen.centerY - 60,
 		font = "assets/fonts/Roboto/Roboto-Bold.ttf",
 		fontSize = 64,
 		align = "center"
@@ -83,7 +79,7 @@ function scene:create( event )
 		parent = sceneGroup,
 		text = "Start",
 		x = screen.centerX,
-		y = logo.y + logo.height*0.5 + 70,
+		y = screen.centerY + 70,
 		font = "assets/fonts/Roboto/Roboto-Bold.ttf",
 		fontSize = 40,
 		align = "center"
@@ -95,7 +91,7 @@ function scene:create( event )
 		parent = sceneGroup,
 		text = "Quit",
 		x = screen.centerX,
-		y = logo.y + logo.height*0.5 + 140,
+		y = screen.centerY + 140,
 		font = "assets/fonts/Roboto/Roboto-Bold.ttf",
 		fontSize = 40,
 		align = "center"
