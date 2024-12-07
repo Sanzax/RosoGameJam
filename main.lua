@@ -8,7 +8,7 @@ native.setProperty("windowMode", "fullscreen")
 -- Luomme yhden globaalin muuttujan, niin sen löytää aina
 -- kaikkialta. Tämän niminen muuttuja ei myöskään vahingossa
 -- sekoitu muihin muuttujiin.
-_G.developerMode = true
+_G.developerMode = false
 
 -- Composer on sisäänrakennettu Solar2D:hen, eli sen voi
 -- voi kutsua ilman tarkempaa tiedostopolun määrittämistä

@@ -17,7 +17,7 @@ local scene = composer.newScene()
 
 local canPress = false
 
-local gameTitle = "Sakarin metsä_peli"
+local gameTitle = "Sakarin Metsä_peli"
 local backgroundFile = "assets/images/levels/mainmenu.png"
 local titleFont = "assets/fonts/Roboto/Roboto-Bold.ttf"
 
@@ -98,7 +98,7 @@ function scene:create( event )
 		align = "center"
 	})
 	buttonQuit.id = "quit"
-	buttonStart:addEventListener( "touch", buttonQuit )
+	buttonQuit:addEventListener( "touch", menuEvent )
 
 
 	local varoitus = ui.newTitle({
