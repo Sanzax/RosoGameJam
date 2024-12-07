@@ -86,13 +86,13 @@ function ui.newAudioButton()
 
 	-- Ladataan taustamusiikki (background music, bgm) streaminä, eli sitä mukaa
 	-- kun kappale soi. Tämä vähentää sen käyttämää muistia.
-	local bgm = audio.loadStream( "assets/music/Man Down.mp3" )
+	local bgm = audio.loadStream( "assets/music/musiikki.mp3" )
 
 	-- Lasketaan pelin master-volume 50%:iin oletuksena, koska emme tiedä
 	-- minkälaisilla asetuksilla pelaaja saattaa pelata ja emme halua
 	-- räjäyttää tämän tärykalvoja.
 
-	local masterVolume = _G.developerMode and 0 or 0.5
+	local masterVolume = _G.developerMode and 0 or 0.1
 
 	audio.setVolume( masterVolume )
 
