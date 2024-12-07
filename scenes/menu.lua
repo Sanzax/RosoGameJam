@@ -17,8 +17,9 @@ local scene = composer.newScene()
 
 local canPress = false
 
-local backgroundFile = "assets/images/levels/forest01.png"
-
+local gameTitle = "Sakarin metsä_peli"
+local backgroundFile = "assets/images/levels/mainmenu.png"
+local titleFont = "assets/fonts/Roboto/Roboto-Bold.ttf"
 
 
 local function menuEvent( event )
@@ -67,20 +68,20 @@ function scene:create( event )
 
 	local title = ui.newTitle({
 		parent = sceneGroup,
-		text = "Metsä peli",
+		text = gameTitle,
 		x = screen.centerX,
 		y = screen.centerY - 60,
-		font = "assets/fonts/Roboto/Roboto-Bold.ttf",
+		font = titleFont,
 		fontSize = 64,
 		align = "center"
 	})
 
 	local buttonStart = ui.newTitle({
 		parent = sceneGroup,
-		text = "Start",
+		text = "Aloita peli",
 		x = screen.centerX,
 		y = screen.centerY + 70,
-		font = "assets/fonts/Roboto/Roboto-Bold.ttf",
+		font = titleFont,
 		fontSize = 40,
 		align = "center"
 	})
@@ -89,15 +90,27 @@ function scene:create( event )
 
 	local buttonQuit = ui.newTitle({
 		parent = sceneGroup,
-		text = "Quit",
+		text = "Häviä peli",
 		x = screen.centerX,
 		y = screen.centerY + 140,
-		font = "assets/fonts/Roboto/Roboto-Bold.ttf",
+		font = titleFont,
 		fontSize = 40,
 		align = "center"
 	})
 	buttonQuit.id = "quit"
 	buttonStart:addEventListener( "touch", buttonQuit )
+
+
+	local varoitus = ui.newTitle({
+		parent = sceneGroup,
+		text = "VAROITUS: Peli sisältää häiritsevää sisältöä",
+		x = screen.centerX,
+		y = screen.centerY + 500,
+		font = titleFont,
+		fontSize = 30,
+		align = "center"
+	})
+	varoitus.text:setFillColor(1, 0, 0)
 
 end
 

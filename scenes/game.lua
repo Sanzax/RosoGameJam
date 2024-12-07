@@ -20,6 +20,8 @@ local scene = composer.newScene()
 local sfxClick = audio.loadSound( "assets/sfx/click.wav" )
 
 
+print(screen.maxX, screen.maxY)
+
 --------------------------------------------------------------------------------------
 -- Scene event funktiot:
 --------------------------------------------------------------------------------------
@@ -28,6 +30,7 @@ local sfxClick = audio.loadSound( "assets/sfx/click.wav" )
 -- tai jos se on tuhottu sen jälkeen kun scene luotiin viimeksi.
 function scene:create( event )
 	local sceneGroup = self.view
+
 	-- Täällä oleva koodi ajetaan kun scene on luotu,
 	-- mutta sitä ei ole vielä näytetty peliruudulla.
 
@@ -48,11 +51,11 @@ function scene:create( event )
 	ui.createSensor(sceneGroup, function(event)
 		if event.phase == "began" and nodeHandling.canPress then
 			audio.play( sfxClick )
+			print(nodeHandling.nextNodeId)
 			if nodeHandling.nextNodeId == nil then
 				nodeHandling:getContent()
 			else
 				nodeHandling:getNode( nodeHandling.nextNodeId)
-				nodeHandling.nextNodeId = nil
 			end
 		end
 	end)
@@ -61,29 +64,9 @@ function scene:create( event )
 
 	nodeHandling.setSceneGroup(sceneGroup)
 	-- Ladataan pelin ensimmäinen node.
-	nodeHandling:getNode( "Metsa alku" )
+	nodeHandling:getNode( "Alku" )
 
-	-- Luodaan nappi, millä pelaaja voi palata menu sceneen.
-	local buttonBack = ui.newTitle({
-		parent = sceneGroup,
-		text = "Back",
-		x = screen.minX + 44,
-		y = screen.minY + 22,
-		font = "assets/fonts/Roboto/Roboto-Bold.ttf",
-		fontSize = 32,
-		align = "left"
-	})
-
-	buttonBack:addEventListener( "touch", function( event )
-		if event.phase == "began" and nodeHandling.canPress then
-			composer.gotoScene( "scenes.menu", {
-				time = 500,
-				effect = "fade",
-			} )
-		end
-
-		return true
-	end )
+	ui.createBackButton(sceneGroup)
 end
 
 

@@ -1,7 +1,7 @@
 local ui = {}
 
 local screen = require( "scripts.screen" )
-
+local composer = require( "composer" )
 local audioButtonCreated = false
 
 local background = nil
@@ -9,18 +9,54 @@ local characters = {}
 
 local textBox
 
-local fontFilename ="assets/fonts/Roboto/Roboto-Regular.ttf"
+local fontFilename = "assets/fonts/Roboto/Roboto-Regular.ttf"
+local boldFontFilename = "assets/fonts/Roboto/Roboto-Bold.ttf"
+local italicFontFilename = "assets/fonts/Roboto/Roboto-Italic.ttf"
 
 local choices = {}
 local choiceGroup
 
-local choiceButtonWidth = 300
-local choiceButtonHeight = 150
-local choiceButtonPacing = 25
+local choiceButtonWidth = screen.width/12
+local choiceButtonHeight = choiceButtonWidth/2
+local choiceButtonPacing = screen.width*0.008
+local choiceButtonY = screen.height * 0.025
 
+-- TextBox data
+local textBoxWidth = screen.width/2
+local textBoxHeight = screen.height/7.5
+local nameAreaWidth = textBoxWidth/6
+local nameAreaHeight = nameAreaWidth/4
+local nameAreaX = -textBoxWidth/2 + nameAreaWidth/2 + textBoxWidth*0.05
+local nameAreaY = -textBoxHeight/2 - nameAreaHeight/2
 
-function ui.textBoxToFront()
-	textBox:toFront()
+local textBoxTextSize = 25
+local buttonTextSize = 25
+local nameTextSize = 25
+
+local backButton
+
+function ui.createBackButton(sceneGroup)
+	-- Luodaan nappi, millä pelaaja voi palata menu sceneen.
+	backButton = ui.newTitle({
+		parent = sceneGroup,
+		text = "Back",
+		x = screen.minX + 44,
+		y = screen.minY + 22,
+		font = "assets/fonts/Roboto/Roboto-Bold.ttf",
+		fontSize = 32,
+		align = "left"
+	})
+
+	backButton:addEventListener( "touch", function( event )
+		if event.phase == "began" then
+			composer.gotoScene( "scenes.menu", {
+				time = 500,
+				effect = "fade",
+			} )
+		end
+
+		return true
+	end )
 end
 
 -- Luodaan uusi audio-nappi.
@@ -145,17 +181,47 @@ function ui.createSensor(sceneGroup, onTouch)
 	touchSensor.isHitTestable = true
 end
 
+local function setNameAreaText(text)
+	display.remove( textBox.nameArea.text )
+	textBox.nameArea.text = display.newText({
+		parent = textBox.nameArea,
+		text = text,
+		x = 0,
+		y = 0,
+		width = nameAreaWidth,
+		font = boldFontFilename,
+		fontSize = nameTextSize,
+		align = "center"
+	})
+
+	textBox.nameArea.text:setFillColor(1)
+end
 
 function ui.createTextBox(sceneGroup)
-	local width = screen.width/2
-	local height = 300
-
 	textBox = display.newGroup()
 	textBox.x = screen.centerX
-	textBox.y = screen.maxY - height/2
+	textBox.y = screen.maxY - textBoxHeight/2 - screen.height* 0.02
 
-	local box = display.newRect( textBox, 0, 0, width, height )
-	box:setFillColor(0.5)
+	textBox.box = display.newImageRect(
+		textBox,
+		"assets/images/other/laatikkoa.png",
+		textBoxWidth,
+		textBoxHeight
+	)
+	textBox.box.alpha = 0.6
+
+	textBox.nameArea = display.newGroup()
+	textBox.nameArea.x = nameAreaX
+	textBox.nameArea.y = nameAreaY
+	textBox:insert(textBox.nameArea)
+
+	textBox.nameArea.box = display.newImageRect(
+		textBox.nameArea,
+		"assets/images/other/nimiboxi.png",
+		nameAreaWidth,
+		nameAreaHeight
+	)
+	textBox.nameArea.box.alpha = 0.6
 
 	sceneGroup:insert(textBox)
 end
@@ -166,22 +232,24 @@ function ui.createNewButton(sceneGroup, text, x, y, width, height, touchFunc)
 	buttonGroup.x = x
 	buttonGroup.y = y
 
-	local image = display.newRect( buttonGroup, 0, 0, width, height )
-
-	local textObj = display.newText({
-		parent = textBox,
+	buttonGroup.box = display.newImageRect(
+		buttonGroup,
+		"assets/images/other/nappi2.png",
+		width,
+		height
+	)
+	print(boldFontFilename)
+	buttonGroup.text = display.newText({
+		parent = buttonGroup,
 		text = text,
 		x = 0,
 		y = 0,
 		width = width,
-		font = fontFilename,
-		fontSize = 48,
-		align = "center"
+		font = boldFontFilename,
+		fontSize = buttonTextSize,
+		align = "center",
 	})
-	textObj:setFillColor(0)
-
-	buttonGroup:insert(image)
-	buttonGroup:insert(textObj)
+	buttonGroup.text:setFillColor(1)
 
 	buttonGroup:addEventListener("touch", touchFunc)
 
@@ -214,7 +282,7 @@ function ui.organizeChoices(sceneGroup)
 	end
 
 	choiceGroup.x = screen.centerX
-	choiceGroup.y = screen.centerY + 500
+	choiceGroup.y = textBox.y - textBoxHeight/2  -choiceButtonHeight/2 - choiceButtonY
 
 	sceneGroup:insert(choiceGroup)
 end
@@ -239,34 +307,32 @@ end
 function ui.newCharacter(sceneGroup, name, params)
 	-- Jos hahmo on jo luotu, niin älä luo sitä uudestaan.
 	if characters[name] then
-		return
+		ui.deleteCharacter(name)
 	end
-
-	-- Skaalataan pelin hahmoja, koska ne ovat paljon
-	-- suurempia kuin esim. pelin taustakuva.
-	local characterScale = 0.35
 
 	-- Hajotetaan funktiokutsu usealle riville,
 	-- jotta siitä tulee helppolukuisempi.
-	characters[name] = display.newImageRect(
+
+	params.scale = params.scale or 1
+
+	characters[name] = display.newImage(
 		sceneGroup,
-		"assets/images/characters/" .. name .. ".png",
-		736 * characterScale,
-		1024 * characterScale
+		"assets/images/characters/" .. name .. ".png"
 	)
+	characters[name].width = characters[name].width * params.scale
+	characters[name].height = characters[name].height * params.scale
 
 	-- Käytetään ternääristä muuttujaa hahmon asettamiseen
 	-- jotta hahmo asettuu aina jonnekin, eikä peli kaadu.
 
 	-- Jos hahmon x-koordinaattia ei ole määritetty, niin
 	-- laitetaan hahmo sitten keskelle ruutua.
-	characters[name].x = params.x or screen.centerX
+	characters[name].x = screen.minX + (params.x or screen.centerX)
 
 	-- Sijoitetaan hahmo sille annetun y-koordinaatin mukaan,
 	-- tai sitten sijoitetaan se taustakuvan alareunaan, tai
 	-- jos taustakuvaa ei ole, niin sitten keskelle ruutua.
-	local yBG = background and (background.y + background.height*0.5) or nil
-	characters[name].y = params.y or yBG or screen.centerY
+	characters[name].y = params.y or screen.maxY
 
 	characters[name].anchorY = 1
 
@@ -275,17 +341,26 @@ function ui.newCharacter(sceneGroup, name, params)
 	if params.xScale then
 		characters[name].xScale = params.xScale
 	end
-
+	textBox:toFront()
 end
 
 
 -- Taustakuva funktiot
 
+function ui.removeBackGround()
+	if background then
+		display.remove( background )
+		background = nil
+	end
+end
 
 function ui.newBackGround(sceneGroup, file)
+	ui.removeBackGround()
 	background = display.newImage( sceneGroup, file, screen.centerX, screen.centerY)
 	background.width = screen.width
 	background.height = screen.height
+
+	background:toBack()
 end
 
 function ui.deleteBackground()
@@ -300,20 +375,42 @@ function ui.deleteText()
 	display.remove( textBox.text )
 end
 
-function ui.createText(text)
+
+local function separateNameAndText(sourceText)
+	local colonIndex = string.find( sourceText, ":" )
+	local name
+	local text = sourceText
+	if colonIndex then
+		name = string.sub(sourceText, 1, colonIndex-1)
+		text = string.sub(sourceText, colonIndex+2, #sourceText)
+	end
+
+	return text, name
+end
+
+function ui.createTextBoxText(text)
 	ui.deleteText()
+	local name
+	text, name = separateNameAndText(text)
+
+	if name then
+		textBox.nameArea.isVisible = true
+		setNameAreaText(name)
+	else
+		textBox.nameArea.isVisible = false
+	end
+
 
 	textBox.text = display.newText({
 		parent = textBox,
 		text = text,
 		x = 0,
 		y = 0,
-		width = screen.width - 60,
+		width = textBoxWidth - textBoxWidth*0.05,
 		font = fontFilename,
-		fontSize = 48,
+		fontSize = textBoxTextSize,
 		align = "center"
 	})
-	--textBox.text.anchorY = 0
 end
 
 return ui

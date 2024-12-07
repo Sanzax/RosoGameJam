@@ -1,5 +1,10 @@
 display.setStatusBar( display.HiddenStatusBar )
 
+
+native.setProperty("windowMode", "fullscreen")
+
+
+
 -- Luomme yhden globaalin muuttujan, niin sen löytää aina
 -- kaikkialta. Tämän niminen muuttuja ei myöskään vahingossa
 -- sekoitu muihin muuttujiin.
@@ -20,4 +25,3 @@ composer.gotoScene( "scenes.menu", {
 	effect = "fade",
 } )
 
- 

@@ -15,7 +15,7 @@ local backgroundFile = "assets/images/levels/forest01.png"
 
 function scene:create( event )
     local sceneGroup = self.view
-print("123214124124214124214124")
+
     -- Taustakuva
     local background = display.newImage( sceneGroup, backgroundFile, screen.centerX, screen.centerY )
     background.width = screen.width
@@ -46,7 +46,7 @@ print("123214124124214124214124")
     -- Lopetusnappi
     local  backbutton= ui.newTitle({
         parent = sceneGroup,
-        text = "Takaisin alkuun",
+        text = "Takaisin päävalikkoon",
         x = screen.centerX,
         y = screen.centerY + 120,
         font = "assets/fonts/Roboto/Roboto-Bold.ttf",

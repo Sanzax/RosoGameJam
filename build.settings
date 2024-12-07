@@ -5,6 +5,14 @@
 
 settings =
 {
+	window =
+    {
+        defaultMode = "fullscreen",
+		defaultViewWidth = 1920,
+		defaultViewHeight = 1080,
+
+    },  
+
 	orientation =
 	{
 		-- Supported values for orientation:

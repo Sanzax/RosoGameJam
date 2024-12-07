@@ -2,89 +2,9 @@
 
 [
 	{
-		"title": "Lehtikasa",
+		"title": "Juttele metso",
 		"tags": "",
-		"body": "<<img, assets/images/levels/forest01.png>>\n\njotain random tekstiä\n\n[[noButton|Metsa aula]]",
-		"position": {
-			"x": "725",
-			"y": "575"
-		},
-		"colorID": 0
-	},
-	{
-		"title": "Metsa alku",
-		"tags": "",
-		"body": "<<img, assets/images/levels/forest01.png>>\n\n# Hahmon alku mietteita\nasdasfsdfsdfsdf\nasdasdasdasdfd\ndfsdfgdsfsdfsdf\n\n[[noButton|Metsa aula]]",
-		"position": {
-			"x": "975",
-			"y": "400"
-		},
-		"colorID": 0
-	},
-	{
-		"title": "Metsa aula",
-		"tags": "",
-		"body": "<<img, assets/images/levels/forest01.png>>\n\n<<if $visits == 0>>\n  sdfsdfsdfsdfsd\n  sdfsdfsdf\n  fsdfsdfsdfs\n      \n   Kuuluu aania\n\n  [[Pakene taakse|Taakse]]\n  [[Pakene lehtikasaan|Lehtikasa]]\n  [[Pakene puuhun|Puu]]\n  [[Pakene puskaan|Puska]]\n <<else>>\n\t#<<character, show, peura, x = 0, y=0, xScale=1>>\n    #<<character, show, orava, x = 0, y=0, xScale=1>>\n    #<<character, show, siili, x = 0, y=0, xScale=1>>\n    #<<character, show, metso, x = 0, y=0, xScale=1>>\n    <<if $visits == 1>>\n      Kaikki:hei vaan hei\n    <<end>>\n    Kenelle juttelisin\n    [[Peura|JuttelePeura]]\n    [[Siili|JutteleSiili]]\n    [[Orava|JutteleOrava]]\n    [[Metso|JutteleMetso]]\n<<end>>",
-		"position": {
-			"x": "975",
-			"y": "525"
-		},
-		"colorID": 0
-	},
-	{
-		"title": "Puska",
-		"tags": "",
-		"body": "<<img, assets/images/levels/forest01.png>>\n\njotain random tekstiä\n\n[[noButton|Metsa aula]]",
-		"position": {
-			"x": "725",
-			"y": "775"
-		},
-		"colorID": 0
-	},
-	{
-		"title": "Puu",
-		"tags": "",
-		"body": "<<img, assets/images/levels/forest01.png>>\n\njotain random tekstiä\n\n[[noButton|Metsa aula]]",
-		"position": {
-			"x": "725",
-			"y": "475"
-		},
-		"colorID": 0
-	},
-	{
-		"title": "Taakse",
-		"tags": "",
-		"body": "<<img, assets/images/levels/forest01.png>>\n\njotain random tekstiä\n\n[[noButton|Metsa aula]]",
-		"position": {
-			"x": "725",
-			"y": "675"
-		},
-		"colorID": 0
-	},
-	{
-		"title": "JutteleSiili",
-		"tags": "",
-		"body": "<<img, assets/images/levels/forest01.png>>\n[[Juttele muille|Metsa aula]]",
-		"position": {
-			"x": "1150",
-			"y": "550"
-		},
-		"colorID": 0
-	},
-	{
-		"title": "JutteleOrava",
-		"tags": "",
-		"body": "<<img, assets/images/levels/forest01.png>>\n[[Juttele muille|Metsa aula]]",
-		"position": {
-			"x": "1150",
-			"y": "750"
-		},
-		"colorID": 0
-	},
-	{
-		"title": "JutteleMetso",
-		"tags": "",
-		"body": "<<img, assets/images/levels/forest01.png>>\n[[Juttele muille|Metsa aula]]",
+		"body": "<<img, assets/images/levels/metsa_aula.png>>\n\n<<character, show, metso_normaali, y = 900 ,  scale = 0.65>>\n\n<<if $visits == 0>>\n\t<<set $metsoVisits = -1>>\n<<end>>\n<<set $metsoVisits = $metsoVisits +1>>\n\n# Jutellaan ekaa kertaan\n<<if $metsoVisits == 0>>\n\t<<if $juttelu == \"metso\">>\n    \t  Metso: \"Eikö sinun pitänyt mennä sinne mistä tulitkin?\"\n    <<else>>\n    \n    <<end>>\n\n  Sakari: \"En muista mistä olen tullut! Auttaisitko minua?\"\n\n  Metso: \"Ihmiset... Juuri tuollaisia.\"\n\n  Sakari: \"Jos autat minua, lupaan, ettet koskaan näe minua enää täälläpäin!\"\n\n  Metso: \"Hmm, tuossa on ideaa. Tunnenkin erään.. kröhöm, siis tiedän erään reitin, jonka voin näyttää jos tulet mukaani.\"\n\n<<end>>\n\n# Ekan kerran päätteeksi + jos juttelet uudestaan\nPitäisiköhän minun lähteä hänen mukaansa?\n\n[[Seuraa|Seuraa metso]]\n[[Juttele muille|Metsa aula]]",
 		"position": {
 			"x": "1150",
 			"y": "650"
@@ -92,12 +12,172 @@
 		"colorID": 0
 	},
 	{
-		"title": "JuttelePeura",
+		"title": "Juttele orava",
 		"tags": "",
-		"body": "<<img, assets/images/levels/forest01.png>>\n[[Juttele muille|Metsa aula]]",
+		"body": "<<img, assets/images/levels/metsa_aula.png>>\n\n<<character, show, orava_normaali, y = 900 ,  scale = 0.65>>\n\n<<if $visits == 0>>\n\t<<set $oravaVisits = -1>>\n<<end>>\n<<set $oravaVisits = $oravaVisits +1>>\n\n# Jutellaan ekaa kertaan\n<<if $oravaVisits == 0>>\n\n\t<<if $juttelu == \"orava\">>\n    \tOrava: \"Hei taas, ihminen.\"\n    <<else>>\n    \n    <<end>>\n    \n\tOrava: \"Moro moro\"\n    Sakari: \"No moro\"\n<<end>>\n\n# Ekan kerran päätteeksi + jos juttelet uudestaan\nPitäisiköhän minun lähteä hänen mukaansa?\n\n[[Seuraa|Seuraa orava]]\n[[Juttele muille|Metsa aula]]",
 		"position": {
 			"x": "1150",
 			"y": "450"
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Juttele peura",
+		"tags": "",
+		"body": "<<img, assets/images/levels/metsa_aula.png>>\n\n<<character, show, peura_normaali, y = 900 ,  scale = 0.65>>\n\n<<if $visits == 0>>\n\t<<set $peuraVisits = -1>>\n<<end>>\n<<set $peuraVisits = $peuraVisits +1>>\n\n# Jutellaan ekaa kertaan\n<<if $peuraVisits == 0>>\n\n    Katsoin peuraa hetken aikaa ennen kuin kävelin häntä kohti. \n    Olen nähnyt peuroja ennenkin mutta en näin läheltä. \n    Hän vaikutti rauhalliselta, vaikka olikin hieman kiusallinen.\n\n\t<<if $juttelu == \"peura\">>\n    \tSakari: \"Miten pääsit selkäni taakse ilman että kuulin sinua?\"\n\n        Peura: \"Hiivin. Voisit kokeilla sitä myös.\"\n\n        Sakari: \"Vähän vaikeaa nyt kun kaikki tietävät läsnäoloni..\"\n\n        Peura: \"........\"\n\n        Peura: \"Seuraavalla kerralla sitten.\"\n\n        Sakari: \"No en ajatellut mennä uudelleen metsään ja eksyä\"\n\n    <<else>>\n    \n    <<end>>\n\nPeura: \"... Miksi et kulje sillä nopealla metalli hirviöllä niin kuin kaikki muutkin karvattomat kaksijalkaiset?\"\n\nSakari: \"Hirviö? Ah, siis auto. Kävelin tänne, joten ei minulla sellaista ole.\"\n\nPeura: \"Ehkä se on parhaaksi. Sellainen hirviö tappoi serkkuni viime viikolla...\"\n\nSakari: \"Ai... No, otan osaa.\"\n\nPeura: \"Kiitos.\"\n\nSakari \"... Ja siis en siis yrittäisi ajaa sinun päältä jos minulla auto olisi.\"\n\nPeura \"... Se on ihan kiva kuulla.\"\n\nSakari: \"Joo..\"\n\nPeura: \"...\"\n\nSakari: \"...\"\n\nPeura: \"No jos haluat, voin viedä sinut niiden hirviöiden alueelle.\"\n\nSakari: \"Oikeasti?\"\n\nPeura nyökkää minulle\n\n<<end>>\n\n# Ekan kerran päätteeksi + jos juttelet uudestaan\nPitäisiköhän minun lähteä hänen mukaansa?\n\n[[Seuraa|Seuraa peura]]\n[[Juttele muille|Metsa aula]]",
+		"position": {
+			"x": "1150",
+			"y": "750"
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Juttele siili",
+		"tags": "",
+		"body": "<<img, assets/images/levels/metsa_aula.png>>\n\n<<character, show, siili_normaali,  y = 900 ,  scale = 0.65>>\n\n<<if $visits == 0>>\n\t<<set $siiliVisits = -1>>\n<<end>>\n<<set $siiliVisits = $siiliVisits +1>>\n\n# Jutellaan ekaa kertaan\n<<if $siiliVisits == 0>>\n\n\t<<if $juttelu == \"siili\">>\n\t\tSiili: \"Hei taas, ihminen.\"\n    <<else>>\n    \tSiili: “Eksynyt matkaaja. Teitä ei paljoa täällä näy.”\n    <<end>>\n    \n            Siili: “Meinasin alkaa tekemään päivällistä ja saavuit juuri sopivasti paikalle. Vien sinut pois täältä jos lähdet mukaani.”\n\n        Sakari: “En tiedä. Escargot ei ole ikinä ollut mikään suuri suosikkini.”\n\n        Siili: “Ei se mitään. Ymmärrän kyllä.”\n\n        Sakari: “Päivällinen voisi kyllä muuten maistua! Olen kävellyt täällä jo ikuisuuden.”\n\n        Siili: “Minulla on sinulle lepopaikka, jos vain otat sen vastaan.”\n<<end>>\n\n# Ekan kerran päätteeksi + jos juttelet uudestaan\nPitäisiköhän minun lähteä hänen mukaansa?\n\n[[Seuraa|Seuraa siili]]\n[[Juttele muille|Metsa aula]]",
+		"position": {
+			"x": "1150",
+			"y": "550"
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Lehtikasa",
+		"tags": "",
+		"body": "<<img, assets/images/levels/metsa_lehtikasa.png>>\n<<set $juttelu = \"siili\">>\n\n<<character, show, siili_normaali, y = 900 ,  scale = 0.65>>\n\nOho! Säikäytin siilin! Taisin häiritä hänen nokosiaan…\n\nSiili: “Oh. Hei. Öm. Mitäs sinä täällä keskellä metsää teet yksiksesi?\n\nPuhekyvyn omaavan siilin olisi kai pitänyt huolestuttaa, mutta tämän piikikkään pallon läsnäolo ja pehmeän näköiset pienet korvat saivat oloni vain rauhalliseksi.\n\nSakari: “Olen eksynyt ja kuulin ääniä. Yritin piiloutua näiden lehtien joukkoon, mutta tämä olikin jo jonkun piilopaikka.”\n\nSiili: “Eikös se ole vähän muutenkin hupsua sinun kokoisen otuksen yrittää piiloutua lehtikasaan?”\n\nSiili oli oikeassa. Olihan se vähän hölmö ratkaisu siinä paniikissa.\n\nSiili: “Ensi kerralla suosittelen kokeilemaan tuuriasi mieluummin vaikka puskan kanssa kuin yrittää löytää onnea mahdottomasta paikasta.” \n\nSakari: “Ihminen on erehtyväinen.”\n\nSiili: “Siinä olet oikeassa. “Elämä on valintoja täynnä ja valitsit jo siinä kohtaa väärin kun lähdit tähän metsään. Mutta ei hätää.”\n\n[[noButton|Metsa aula]]",
+		"position": {
+			"x": "800",
+			"y": "550"
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Alku",
+		"tags": "",
+		"body": "Lähdin retkelle metsään joka ei ollut minulle entuudestaan tuttu. Tutut lähimetsät olivat jo niin koluttuja että kaipasin uutta seikkailua.\n\nMukanani oli kuumaa kahvia termoksessa, makkarapaketti ja hyvää mieltä.\n\nMetsä näytti synkemmältä kuin ajattelin, mutta reippain askelin astelin polulle ja matkaan.\n\nLaavulle ei pitäisi kartan mukaan olla pitkä matka.\n\nJos olisin vain muistanut ottaa kartan mukaan.\n\nMutta kyllä Sakari nyt kilometrin matkan osaa kulkea ilman karttaa eksymättäkin.\n\nVai mitä? \n\n<<img, assets/images/levels/metsa_alku.png>>\nKuljin pitkän matkan ja laavua ei vaan näkynyt missään.\n\n[[noButton|Metsa alku]]",
+		"position": {
+			"x": "850",
+			"y": "300"
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Metsa aula",
+		"tags": "",
+		"body": "<<img, assets/images/levels/metsa_aula.png>>\n\n<<if $visits == 0>>\n\t<<set $specialVisits = -1>>\n<<end>>\n<<set $specialVisits = $specialVisits + 1>>\n\n<<if $specialVisits == 0>>\n\tSaavuin valoisammalle metsän aukealle. \n\n\tMietin lepäämistä hetken, kunnes aloin kuulemaan jostain ääniä.\n    \n    Selviytymisvaistoni käskee minut piiloutumaan, mutta minne? \n    \n  [[Juokse takaisin|Taakse]]\n  [[Lehtikasaan|Lehtikasa]]\n  [[Puuhun|Puu]]\n  [[Puskaan|Puska]]\n <<else>>\n    <<if $specialVisits == 1>>\n    \n        <<character, show, peura_normaali, x = 384, y = 900,  scale = 0.5>>\n        <<character, show, siili_normaali, x = 768, y = 900,  scale = 0.5>>\n        <<character, show, orava_normaali, x = 1152, y = 900,  scale = 0.5>>\n        <<character, show, metso_normaali, x = 1536, y = 900,  scale = 0.5>>\n    \n       <<if $juttelu == \"orava\">>\n      \t\tOrava: “Tämä metsä on täynnä ystäviä. Joku meistä voi varmasti johdattaa sinut ulos täältä. Tutustu meihin ja päätä kenen meistä haluaisit auttavan sinut pois metsästä!”\n   \t\t<<elseif $juttelu == \"siili\">>\n        \tNousin ylös lehtikasasta ja yllätyksekseni paikalle oli ilmestynyt muitakin metsän asukkeja. Ei ihme, että kuulin ääniä.\n      \t\tSiili: “Tämä metsä on täynnä ystäviä. Joku meistä voi varmasti johdattaa sinut ulos täältä. Tutustu meihin ja päätä kenen meistä haluaisit auttavan sinut pois metsästä!”\n   \t\t<<elseif $juttelu == \"peura\">>\n            Aukiolle ilmestyi muitakin eläimiä. Joku heistä voi varmasti johdattaa minut ulos täältä.\n            Voisin tutustua heihin kaikkiin ja päättää, kenen haluaisin auttavan minut pois täältä metsästä.\n   \t\t<<elseif $juttelu == \"metso\">>\n            Tulin esiin pusikosta. Aukiolle ilmestyi muitakin eläimiä. Joku heistä voi varmasti johdattaa minut ulos täältä.\n            Voisin tutustua heihin kaikkiin ja päättää, kenen haluaisin auttavan minut pois täältä metsästä.\n\n   \t\t<<end>>\n\n    \tNyökkäsin eläimille ja ne nyökkäsivät takaisin omilla tavoillaan. Kummallista.\n    <<end>>\n    \n     <<character, show, peura_normaali, x = 384, y = 900,  scale = 0.5>>\n     <<character, show, siili_normaali, x = 768, y = 900,  scale = 0.5>>\n     <<character, show, orava_normaali, x = 1152, y = 900,  scale = 0.5>>\n     <<character, show, metso_normaali, x = 1536, y = 900,  scale = 0.5>>\n    \n    Mille eläimelle juttelisin?\n    [[Peura|Juttele peura]]\n    [[Siili|Juttele siili]]\n    [[Orava|Juttele orava]]\n    [[Metso|Juttele metso]]\n<<end>>",
+		"position": {
+			"x": "975",
+			"y": "525"
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Murhaluola",
+		"tags": "",
+		"body": "Seurasin piikkipalloa sisään pimeään luolaan syvemmälle ja syvemmälle.\n\nSiinä kohtaa tajusin tehneeni virheen.\n\n<<img, assets/images/levels/murhaluola.png>>\n\n<<character, show, siili_pelottava, y = 1080 ,  scale = 0.65>>\n\nOlinkin itse päivällinen!\n\n<<character, hide, siili_pelottava>>\n<<character, show, siili_psykoosi ,  scale = 0.65>>\n\nSiili: \"Huono tuuri! Ravintoketjun heikoin lenkki taisitkin olla tällä kertaa sinä!\"\n\n<<del>>\n<<character, hide, siili_psykoosi>>\nKuolemani oli hidas ja tuskallinen kun nuo terävät piikit lävistivät minut yksi kerrallaan.\n\nSiili nautiskeli ruumiini kuin olisin ollut lastenkutsujen cocktail-siili. \n\nKuinka ironista.\n\n...\n\n???: “Anteeksi… sanoitko juuri että ‘kuolemasi’ oli hidas?”\n\n<<pelinLoppu>>",
+		"position": {
+			"x": "1450",
+			"y": "550"
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Psykiatri",
+		"tags": "",
+		"body": "...\n\n<<img, assets/images/levels/psykiatrin_huone.png>>\n\nPsykiatri: “Eli ymmärsinkö siis oikein…”\n\nPsykiatri: “Metso, joka puhui sinulle ja jonka sulat oli täynnä silmiä, johdatti sinut ulos metsästä?”\n\nSakari: “Juuri näin! Tiedän että se on outoa, mutta niin tapahtui! Siksi ajattelinkin tänään käydä kiittämässä häntä. Mistäköhän ruuasta metsot pitävät?”\n\nPsykiatri: “...Ehkä me nyt Sakari sovitaan että ei lähdetä metsälenkeille vähään aikaan.”\n\n<<pelinLoppu>>",
+		"position": {
+			"x": "1450",
+			"y": "650"
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Puska",
+		"tags": "",
+		"body": "<<img, assets/images/levels/metsa_puska.png>>\n<<set $juttelu = \"metso\">>\n\nMenen tänne pusikkoon piiloon. Toivottavasti en häiritse ketään metsän asukeista.\n\n<<character, show, metso_normaali,  scale = 1>>\n\nMetso: \"KRÖHÖM! Mitä ihminen tekee minun reviirilläni? Etkö tiedä, että tämä on aluettani?\n\nSakari: \"Anteeksi metso, olen vain eksynyt ja kuulin pelottavia ääniä...\"\n\nMetso: \"Täällä ei kaltaisiasi kaivata! Eksy takaisin sinne mistä tulitkin!\"\n\n\n#sakari poistuu puskasta, metso häätää sakaria?\n\n[[noButton|Metsa aula]]",
+		"position": {
+			"x": "800",
+			"y": "650"
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Puu",
+		"tags": "",
+		"body": "<<img, assets/images/levels/metsa_puu.png>>\n\n<<set $juttelu = \"orava\">>\n\nSakari: \"Huh kiipeän äkkiä puuhun turvaan, toivottavasti en häiritse ketään metsän asukeista\"\n\n<<character, show, orava_normaali, x = 960,  y = 900 ,  scale = 0.65>>\n\nOrava: \"Hei sinä siellä! Osaatko lausua oravan englanniksi?\"\n\nSakari: \"Ööö... Squirrel..?\n\nOrava: \"Hahaha! Arvasin ettei tuo tule ihmisotukselta onnistumaan!\"\n\nSakari:\"Vaikka en osaa lausua sitä täydellisesti, pystyisitkö silti auttamaan minua? Olen eksynyt tänne metsään ja kuulin kammottavia ääniä tuolla alhaalla.\"\n\nOrava: \"HAHHAAA. Squirrel ja eksynyt!\"\n\nSakari: \"Voisitko vaan näyttää minulle tien pois täältä?\" \n\nOrava: \"Hyvä on. Mennään takaisin alas, sillä minä en näe siellä mitään uhkia. Jatketaan jutusteua siellä. HAHHAHA HEHEHHEE HOOHOHOOHO KJEHKJEHKJEH\"\n\n[[noButton|Metsa aula]]",
+		"position": {
+			"x": "800",
+			"y": "450"
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Seuraa metso",
+		"tags": "",
+		"body": "<<img, assets/images/levels/metsa_seuraa1.png>>\n<<character, show, metso_normaali, y = 1100 ,  scale = 0.65>>\n\nLähdimme Metson kanssa matkaan.\n\n<<img, assets/images/levels/metsa_seuraa2.png>>\n\nVaikutti siltä että pöyhkeä otus oli viemässä minua vain syvemmälle metsään.\n\n<<img, assets/images/levels/metsa_seuraa3.png>>\n\nEn uskaltanut puhua paljoa siinä pelossa että lintu suuttuisikin minulle.\n\n<<img, assets/images/levels/metsa_seuraa4.png>>\n\n<<character, hide, metso_normaali>>\n<<character, show, metso_pelottava, y = 1100 ,  scale = 0.65>>\n\nPimeässä metsässä linnun ulkomuoto alkoi vaikuttamaan uhkaavammalta.\n\n<<img, assets/images/levels/metsa_seuraa5.png>>\n\nTärisin, mutta luotin hänen sanaansa että hän veisi minut pois metsästä.\n\n<<img, assets/images/levels/metsa_seuraa6.png>>\n\nMetso: “Hyvä, ettet pidä puhumisesta. Joskus on vain hyvä olla hiljaa ja kuunnella luonnon ääniä.”\n\n<<img, assets/images/levels/metsa_seuraa7.png>>\n\nEn vastannut mitään. \n\n<<img, assets/images/levels/metsa_seuraa8.png>>\n\nMetso: “Älä huoli, en minä sinua syö vaikka puhuisitkin. Teihin ihmisiin on vaan niin vaikea luottaa.”\n\nSakari: “Y-ymmärrän.”\n\n<<img, assets/images/levels/metsa_seuraa9.png>>\n\nEn silti uskaltanut enää vastata mitään muuta ja jatkoimme syvemmälle metsään kaikessa hiljaisuudessa.\n\n<<img, assets/images/levels/kaupunki.png>>\n<<character, hide, metso_pelottava>>\n\nMetso piti sanansa. \n\nRiemuitsin kaupungin nähtyäni, pääsin vihdoin ulos metsästä! \n\nKäännyin kiittääkseni metsoa, mutta se olikin jo lähtenyt matkoihinsa…\n\n[[noButton|Psykiatri]]",
+		"position": {
+			"x": "1300",
+			"y": "650"
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Seuraa orava",
+		"tags": "",
+		"body": "<<img, assets/images/levels/metsa_seuraa1.png>>\n<<character, show, orava_normaali, y = 900 ,  scale = 0.65>>\n\nHahmojen välistä keskustelua\n\n<<img, assets/images/levels/metsa_seuraa2.png>>\n\nHahmojen välistä keskustelua\n\n<<img, assets/images/levels/metsa_seuraa3.png>>\n\nHahmojen välistä keskustelua\n\n<<img, assets/images/levels/metsa_seuraa4.png>>\n\nHahmojen välistä keskustelua\n\n<<img, assets/images/levels/metsa_seuraa5.png>>\n\nHahmojen välistä keskustelua\n\n<<img, assets/images/levels/metsa_seuraa6.png>>\n\nHahmojen välistä keskustelua\n\n<<img, assets/images/levels/metsa_seuraa7.png>>\n\nHahmojen välistä keskustelua\n\n<<img, assets/images/levels/metsa_seuraa8.png>>\n\nHahmojen välistä keskustelua\n\n<<img, assets/images/levels/metsa_seuraa9.png>>\n\n<<character, hide, orava_normaali>>\n<<character, show, orava_pelottava, y = 900 ,  scale = 0.65>>\n\nHahmojen välistä keskustelua\n\n[[noButton|Uudestaan]]",
+		"position": {
+			"x": "1300",
+			"y": "450"
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Seuraa peura",
+		"tags": "",
+		"body": "<<img, assets/images/levels/metsa_seuraa1.png>>\n<<character, show, peura_normaali, y = 1100 ,  scale = 0.65, xScale = -1>>\n\nKun kävelin peuran perässä, tunsin oloni oudoksi. Tästä huolimatta, peura jatkoi matkaansa ja minä seurasin.\n\n<<img, assets/images/levels/metsa_seuraa2.png>>\n\nPeura käveli nopeasti, mutta pysyin perässä.\n\n<<img, assets/images/levels/metsa_seuraa3.png>>\n\nMetsä alkoi tuntua yhä kummallisemmalta. Kun katsoin peuraa tarkemmin, näin kuin hänen keho alkoi… vääntymään oudosti.\n\nSilmän räpäyksessä tämä normaali peura muuttui.. joksikin toiseksi olennoksi..\n\n<<img, assets/images/levels/metsa_seuraa4.png>>\n<<character, hide, peura_normaali>>\n<<character, show, peura_pelottavai, y = 1100 ,  scale = 0.65, xScale = -1>>\n\nPeura: “Toivottavasti jaksat juosta, Sakari...”\n\nMinua pelotti, mutta en pystynyt sanomaan mitään. Miten hän tiesi nimeni? Peuran katse oli kaikkialla, mutta se kohdistui minuun. En ehtinyt reagoimaan, ajattelemaan kunnolla ennen kuin peura puhui uudelleen.\n\nPeura: “Joskus juokseminen on ainut vaihtoehto, mutta jos sinulla on voima valita.. No.. toivottavasti valitset oikein.”\n\n<<img, assets/images/levels/metsa_seuraa5.png>>\n\nKävely muuttui pian juoksuksi ja puut alkoivat vääntyä spiraaleiksi silmieni edessä. \n\n<<img, assets/images/levels/metsa_seuraa6.png>>\n\nPeura lähtee melkein laukkaamaan.\n\n<<img, assets/images/levels/metsa_seuraa7.png>>\n\n Pysyin vielä perässä, mutta vain hetken. \n\n<<img, assets/images/levels/metsa_seuraa8.png>>\n\nVaikka juoksinkin, se peura liikkui nopeammin ja nopeammin. \n\n<<img, assets/images/levels/metsa_seuraa9.png>>\n\nPian se katosi metsän syvyyteen.\n\nSakari: “Hei! Odota minua!”\n\n<<del>>\n\nHuusin peuran perään, mutta hän ei kuullut minua enää. Siitä huolimatta juoksin ja juoksin niin kauas kuin jalkani kantoivat. \n\nTuntui kuin jalkoihini olisi kiinnitetty painoja ja se tunne väsytti minua. Pääni pyörii ja kehoani sattui. \n\nRasite sai minut luovuttamaan ja kun olin kaatumassa allani olevan sammaleen päälle, tunsin kuin ajatukseni hiipuivat hiljalleen.\n\n[[noButton|Uudestaan]]",
+		"position": {
+			"x": "1300",
+			"y": "750"
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Seuraa siili",
+		"tags": "",
+		"body": "<<img, assets/images/levels/metsa_seuraa1.png>>\n<<character, show, siili_normaali, y = 1100 ,  scale = 0.65, xScale = -1>>\n\nSeurasin pientä lyllertävää siiltä läpi reitin joka tuntui kovin pitkältä ja kiemurtelevalta.\n\n<<img, assets/images/levels/metsa_seuraa2.png>>\n\nOksat raapivat ikävästi käsivarsiani, kun pieni otus itse alitti puskat helposti.\n\n<<img, assets/images/levels/metsa_seuraa3.png>>\n\nSiili alkoi juttelemaan kanssani. Matka taittui paljon mukavammin, kun oli juttuseuraa.\n\n<<img, assets/images/levels/metsa_seuraa4.png>>\n\nSiili:  “Kuulin että metsää on tuhottu ihmisen toimesta. Mitä sinulla on siihen sanottavaa?”\n\nSakari: “On valitettavaa että kotinne kaadetaan. Mutta se on vain osa elämää.”\n\n<<img, assets/images/levels/metsa_seuraa5.png>>\n\nSiili: “Tämä metsä on aina ollut turvallinen ja mukava paikka asua. Mutta nyt te ihmiset myös metsästätte meitä.”\n\nSakari: “Olen pahoillani. Siilit ovat onneksi rauhoitettuja. Teitä me emme metsästä.”\n\n<<character, hide, siili_normaali>>\n<<character, show, siili_pelottava, y = 1100 ,  scale = 0.65, xScale = -1>>\n\nSiilin hermostuessa se alkoi näyttämään pelottavammalta metsän pimeydessä. Pelko alkoi kalvamaan sisintäni, mutta jatkoin siilin seuraamista siitä huolimatta.\n\n<<img, assets/images/levels/metsa_seuraa6.png>>\n\nSiili: “Vaikka olenkin turvassa, ystäväni eivät ole. Miksi minun elämäni on yhtään arvokkaampi kuin heidän elämänsä?”\n\nSakari: “Olette kaikki yhtä arvokkaita. Elämän kiertokulku nyt vain on tällaista.”\n\n<<img, assets/images/levels/metsa_seuraa7.png>>\n\nSiili: “Elämän kiertokulku, hah! Syö tai tule syödyksi, niinkö?”\n\nSakari: “Niinhän se tuppaa olemaan. Toiset vain ovat alempana ketjussa kuin toiset.”\n\n<<img, assets/images/levels/metsa_seuraa8.png>>\n\nSiinä kohtaa siili hiljeni eikä enää puhunut minulle. Taisin loukata hänen tunteitansa.\n\n<<img, assets/images/levels/metsa_seuraa9.png>>\n\nSaavuimme luolalle johon siili asteli sisään tarmokkaasti.\n\nSiili: “Tännepäin, tännepäin! Nopeasti nyt niin pääsemme syömään!”\n\n[[noButton|Murhaluola]]",
+		"position": {
+			"x": "1300",
+			"y": "550"
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Taakse",
+		"tags": "",
+		"body": "<<img, assets/images/levels/metsa_taakse.png>>\n<<set $juttelu = \"peura\">>\n\nEn kyllä ole menossa tuonne...\n\n<<img, assets/images/levels/metsa_aula.png>>\n<<character, show, peura_jumpscare, x = 960 ,  scale = 1>>\n\nPeura: \"Hei...\"\n\nSakari: \"Hei?\"\n\nPeura: \"....\"\n\nSakari: \"....?\"\n\nPeura: \"Oletko eksynyt?\"\n\nSakari: \"No joo...\"\n\nPeura katsoo minua hetken, kunnes hän kävelee etäämmälle sanomatta muuta.\n\n[[noButton|Metsa aula]]",
+		"position": {
+			"x": "800",
+			"y": "750"
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Uudestaan",
+		"tags": "",
+		"body": "...\n\n<<set $specialVisits = -1>>\n<<set $oravaVisits = -1>>\n<<set $siiliVisits = -1>>\n<<set $metsoVisits = -1>>\n<<set $peuraVisits = -1>>\n\n[[noButton|Metsa alku]]",
+		"position": {
+			"x": "975",
+			"y": "175"
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Metsa alku",
+		"tags": "",
+		"body": "<<img, assets/images/levels/metsa_alku.png>>\n\nPäässäni humisee kummasti ja väsymys painaa. \n\nMissähän minä olen? Taidan olla eksynyt.\n\nJatkoin syvemmälle metsään etsien polkua, mutta en enää löytänyt takaisin reitille.\n\n[[noButton|Metsa aula]]",
+		"position": {
+			"x": "975",
+			"y": "300"
 		},
 		"colorID": 0
 	}

@@ -4,6 +4,7 @@ local nodeHandling = {}
 --local screen = require( "scripts.screen" )
 local weaver = require( "scripts.spyricStoryWeaver" )
 local ui = require( "scripts.ui" )
+local composer = require( "composer" )
 
 -- Koska nodeIndex, node, characters ja background muuttujat ovat scene:create
 -- funktion sisällä, niin niihin ei pääse käsiksi tämä funktion ulkopuolelta.
@@ -13,7 +14,7 @@ nodeHandling.canPress = false
 
 local sceneGroup
 
-nodeHandling.nextNodeId = nil
+--nodeHandling.nextNodeId = nil
 
 function nodeHandling.setSceneGroup(newSceneGroup)
 	sceneGroup = newSceneGroup
@@ -37,7 +38,6 @@ local function commandImageOrDel(command, i)
 	if command == "img" then
 		-- Luodaan uusi taustakuva.
 		ui.newBackGround( sceneGroup, node[i][2])
-		ui.textBoxToFront()
 	end
 end
 
@@ -57,7 +57,8 @@ local function commandCharacter(i)
 end
 
 local function commandText(i)
-	ui.createText(node[i][2])
+	ui.createTextBoxText(node[i][2])
+	-- Jos seuraava komento ei ole linkki
 	if not (node[i+1][1] == "link") then
 		-- Lopetetaan looppi
 		return true
@@ -68,8 +69,8 @@ end
 local function commandLink(i)
 	-- Ei luoda nappia linkille
 	if node[i][2] == "noButton" then
-		print(node[i][3])
 		nodeHandling.nextNodeId = node[i][3]
+		print(nodeHandling.nextNodeId)
 		return true
 	else
 		ui.createNewChoiceButton(sceneGroup, node[i], 0, 0, touchLink)
@@ -113,6 +114,12 @@ function nodeHandling:getContent()
 			if commandLink(i) then
 				break
 			end
+		elseif command == "pelinLoppu" then
+			composer.gotoScene( "scenes.credit", {
+				time = 500,
+				effect = "fade",
+			} )
+			break
 		end
 	end
 end
@@ -123,6 +130,9 @@ function nodeHandling:getNode( nodeName )
 	ui.deleteText()
 	ui.deleteCharacters()
 	ui.deleteChoices()
+	ui.removeBackGround()
+
+	nodeHandling.nextNodeId = nil
 
 	node = weaver.getNode( nodeName, _G.story )
 	nodeIndex = 1
